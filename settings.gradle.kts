@@ -1,1 +1,1 @@
-rootProject.name = "spamdit"
+rootProject.name = "showroom"

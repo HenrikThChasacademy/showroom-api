@@ -1,10 +1,10 @@
-package com.spammers.spamdit
+package com.chasreact.shoowroom
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class SpamditApplicationTests {
+class ShowroomApplicationTests {
 
 	@Test
 	fun contextLoads() {
