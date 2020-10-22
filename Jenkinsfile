@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Update ECR service'){
             steps {
-                sh 'aws ecs update-service --cluster shoowroom-cluster --service Showroom-service --force-new-deployment'
+                sh 'aws ecs update-service --cluster shoowroom-cluster --service Showroom-service --force-new-deployment --region eu-west-1'
             }
         }
     }
