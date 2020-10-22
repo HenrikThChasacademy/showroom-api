@@ -11,7 +11,7 @@ class ShowroomRouters {
 
     @FlowPreview
     @Bean
-    fun spamRoutes(carHandler: CarHandler) = coRouter {
+    fun showroomRoutes(carHandler: CarHandler) = coRouter {
         GET("/car", carHandler::getCars)
         GET("/car/{id}", carHandler::getCarById)
         POST("/car", carHandler::saveCar)
