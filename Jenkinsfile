@@ -26,6 +26,11 @@ pipeline {
                 sh "docker push 674186390846.dkr.ecr.eu-west-1.amazonaws.com/showroom"
             }
         }
+        stage('Update ECR service'){
+            steps {
+                sh 'aws ecs update-service --cluster shoowroom-cluster --service Showroom-service --force-new-deployment'
+            }
+        }
     }
     post {
         always {
