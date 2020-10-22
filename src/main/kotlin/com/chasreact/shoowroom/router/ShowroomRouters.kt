@@ -15,7 +15,7 @@ class ShowroomRouters {
         GET("/car", carHandler::getCars)
         GET("/car/{id}", carHandler::getCarById)
         POST("/car", carHandler::saveCar)
-        DELETE("/car", carHandler::deleteCar)
+        DELETE("/car/{id}", carHandler::deleteCar)
     }
 
 }
