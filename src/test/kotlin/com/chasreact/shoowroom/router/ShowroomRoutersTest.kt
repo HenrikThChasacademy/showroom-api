@@ -39,52 +39,39 @@ class ShowroomRoutersTest {
     @MockBean
     private lateinit var showroomRepository: ShowroomRepository
 
-
-    lateinit var date: LocalDateTime
-    lateinit var date2: LocalDateTime
-    lateinit var date3: LocalDateTime
-    @Before
-    fun init() {
-           date = LocalDateTime.of(2020, 9, 5, 12, 22, 43, 333)
-           date2 = LocalDateTime.of(2020, 9, 7, 12, 12, 12, 333)
-           date3 = LocalDateTime.of(2020, 9, 12, 12, 53, 32, 333)
-
-    }
-
-
     @FlowPreview
     @Test
-    fun `get all spam`() {
-        val spam1 = Car("1", "super_user", "best topic", "the ultimate text", date)
-        val spam2 = Car("2", "super_user", "another best topic", "the second ultimate text", date2)
-        val spam3 = Car("3", "super_user", "last best topic", "the worst text", date3)
+    fun `get all cars`() {
+        val car1 = Car("1", "Saab", "900 Turbo", "1992", "saab_900_turbo.jpg", "v4 2.0 turbo", "140 hp")
+        val car2 = Car("2", "Volvo", "745 GL", "1988", "volvo_745_gl.jpg", "v4 2.0", "80 hp")
+        val car3 = Car("3", "BMW", "525i", "2001", "bwm_525i.jpg", "v4 2.5", "180 hp")
 
-        val spamFlux = Flux.just(spam1, spam2, spam3)
+        val spamFlux = Flux.just(car1, car2, car3)
         given(showroomRepository.findAll()).willReturn(spamFlux)
         client.get()
-                .uri("/spam")
+                .uri("/car")
                 .exchange()
                 .expectStatus()
                 .isOk
                 .expectBodyList<Car>()
-                .contains(spam1, spam2, spam3)
+                .contains(car1, car2, car3)
 
     }
 
     @FlowPreview
     @Test
-    fun `get spam by id`() {
-        val spam = Car("1", "super_user", "best topic", "the ultimate text", date)
-        val spamMono = Mono.just(spam)
+    fun `get car by id`() {
+        val car = Car("1", "Saab", "900 Turbo", "1992", "saab_900_turbo.jpg", "v4 2.0 turbo", "140 hp")
+        val spamMono = Mono.just(car)
 
         given(showroomRepository.findById("1")).willReturn(spamMono)
         client.get()
-                .uri("/spam/1")
+                .uri("/car/1")
                 .exchange()
                 .expectStatus()
                 .isOk
                 .expectBody<Car>()
-                .isEqualTo(spam)
+                .isEqualTo(car)
     }
 
 }

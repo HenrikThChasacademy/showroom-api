@@ -39,11 +39,17 @@ class CarHandler (@Autowired var showroomRepository: ShowroomRepository){
     }
 
     suspend fun deleteCar(request: ServerRequest): ServerResponse {
-        val car: Deferred<Void?> = GlobalScope.async {
-            showroomRepository.delete(request.awaitBody()).awaitFirstOrNull()
-        }
 
-        return car.await().let { ServerResponse.ok().buildAndAwait() }
+        val car: Deferred<Car?> = GlobalScope.async {
+            showroomRepository.findById(request.pathVariable("id")).awaitFirstOrNull()
+        }
+        return car.await()?.let {
+            val deletedCar: Deferred<Void?> = GlobalScope.async {
+                    showroomRepository.delete(it).awaitFirstOrNull()
+            }
+            deletedCar.await().let { ServerResponse.ok().buildAndAwait() }
+        } ?: ServerResponse.notFound().buildAndAwait()
+
     }
 
 }
